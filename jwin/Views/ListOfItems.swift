@@ -4,10 +4,9 @@ import SwiftUI
 List of items with title
 
 TODOS:
-   1. Breaking UI bug after reordering and when elements go out of view
-   2. Some list elements hidden beneath keyboard
-   3. Auto-focus on new element after creation
-   4. Press enter to create new element
+   1. Some list elements hidden beneath keyboard
+   2. Auto-focus on new element after creation
+   3. Press enter to create new element
 */
 struct ListOfItems: View {
     @ObservedObject var list: JList
@@ -50,7 +49,7 @@ struct ListOfItems: View {
         .navigationBarItems(trailing: HStack {
             EditButton()
             Toggle(isOn: $showingActive) {
-                Text("All")
+                Text("All").font(.caption)
             }
         })
     }

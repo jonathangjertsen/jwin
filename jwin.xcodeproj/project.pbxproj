@@ -418,7 +418,7 @@
 				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -439,7 +439,7 @@
 				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

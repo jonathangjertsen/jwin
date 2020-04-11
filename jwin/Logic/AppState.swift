@@ -43,6 +43,30 @@ class AppState: Codable, ObservableObject {
         }
     }
     
+    /// Sets up and returns a timer that saves to the default URL every n seconds.
+    /// It will stop if it fails.
+    /// - Parameters:
+    ///   - seconds: Interval between saves
+    ///   - onSuccess: What to do each time the save succeeds
+    ///   - url: The default URL
+    ///   - onError: What to do (in addition to stopping the timer) if saving fials
+    ///   - urlOrNil: The default URL if it was available (but the saving failed), otherwise `nil`. 
+    /// - Returns: The timer that was created
+    func saveEvery(
+        n seconds: Double,
+        onSuccess: @escaping (_ url: URL) -> (),
+        onError: @escaping (_ urlOrNil: URL?) -> ()
+    ) -> Timer {
+        return Timer.scheduledTimer(withTimeInterval: seconds, repeats: true) {
+            timer in
+            self.saveDefault(onSuccess: onSuccess, onError: {
+                urlOrNil in
+                timer.invalidate()
+                onError(urlOrNil)
+            })
+        }
+    }
+    
     /// Adds a new empty list.
     func addList() {
         self.lists.append(

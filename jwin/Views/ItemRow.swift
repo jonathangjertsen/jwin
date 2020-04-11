@@ -22,9 +22,22 @@ struct ItemRow: View {
             Spacer()
         
             /// Toggle to set whether the item should be active
-            Toggle("Active", isOn: $item.active)
-                .labelsHidden()
-                .padding()
+            Button(action: {
+                self.item.active.toggle()
+            }) {
+                HStack {
+                    ZStack {
+                        Rectangle()
+                            .stroke(Color.accentColor, lineWidth: 3)
+                            .frame(width: 23, height: 23, alignment: .center)
+                        
+                        Rectangle()
+                            .fill(self.item.active ? Color.clear : Color.accentColor)
+                            .frame(width: 20, height: 20, alignment: .center)
+                        .padding()
+                    }
+                }
+            }
         }
     }
 }

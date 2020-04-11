@@ -22,7 +22,7 @@ struct ListOfListsView: View {
                 HStack {
                     Spacer()
                     Button(action: { self.appState.addList() }) {
-                        Text("New list")
+                        Text("New list").padding()
                     }
                     Spacer()
                 }
