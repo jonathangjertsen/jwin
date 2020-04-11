@@ -1,24 +1,67 @@
 import SwiftUI
 
+/// A list of items along with a name and an UUID.
 class JList: Codable, Identifiable, ObservableObject {
+    /// UUID for this list
     var id: UUID
-    @Published var name: String
-    @Published var items: [JListItem]
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case items
-    }
     
+    /// Name of the list, shows up in the navigation view and in the list of lists
+    @Published var name: String
+    
+    /// All of the items in the list
+    @Published var items: [JListItem]
+    
+
+    /// Trivial initializer for JList
+    ///
+    /// - Parameters:
+    ///    - id: Unique UUID for this list
+    ///    - name: Name for this list, not necessarily unique
+    ///    - items: A list of items for this
     init(id: UUID, name: String, items: [JListItem]) {
         self.id = id
         self.name = name
         self.items = items
     }
     
+    /// - Returns: a list with an empty string for a name, and no items.
+    static func empty() -> JList {
+        return JList(id: UUID(), name: "", items: [])
+    }
+    
+    /// Adds an empty item to the end of the list.
+    func addEmpty() {
+        self.items.append(JListItem.empty())
+    }
+    
+    /// Removes the given indices from the list.
+    ///
+    /// - Parameters:
+    ///     - at: The offsets to remove (provided by e.g. `.onDelete`)
+    func remove(at offsets: IndexSet) {
+        self.items.remove(atOffsets: offsets)
+    }
+    
+    /// Moves the given indices in the list.
+    ///
+    /// - Parameters:
+    ///     - from: The offsets to move (provided by e.g. `onMove`)
+    ///     - to: Destination for the first offset
+    func move(from source: IndexSet, to destination: Int) {
+        self.items.move(fromOffsets: source, toOffset: destination)
+    }
+
+    // MARK: - Boilerplate to allow for the list to be encoded as JSON and also observable
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case items
+    }
+
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+
         self.id = try values.decode(UUID.self, forKey: .id)
         self.name = try values.decode(String.self, forKey: .name)
         self.items = try values.decode([JListItem].self, forKey: .items)
@@ -30,24 +73,11 @@ class JList: Codable, Identifiable, ObservableObject {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.items, forKey: .items)
     }
-    
-    static func empty() -> JList {
-        return JList(id: UUID(), name: "", items: [])
-    }
-    
-    func addEmpty() {
-        self.items.append(JListItem.empty())
-    }
-    
-    func remove(at offsets: IndexSet) {
-        self.items.remove(atOffsets: offsets)
-    }
-    
-    func move(from source: IndexSet, to destination: Int) {
-        self.items.move(fromOffsets: source, toOffset: destination)
-    }
+
+    // MARK: - Debug only
     
     #if DEBUG
+    /// An example list that can be used in previews.
     static let example = JList(
         id: UUID(),
         name: "Handleliste",
@@ -60,21 +90,45 @@ class JList: Codable, Identifiable, ObservableObject {
     #endif
 }
 
+/// An element of a list. Has an unique identifier, some text, and an active/inactive flag.
 class JListItem: Codable, Equatable, Identifiable, ObservableObject {
+    /// Unique ID for this item
     var id: UUID
+    
+    /// The text to show for this object
     @Published var text: String
+    
+    /// Whether this object is currently "active" (for some appropriate definition of active)
     @Published var active: Bool
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case text
-        case active
-    }
-    
+    /// Trivial initializer for JListItem
+    ///
+    /// - Parameters:
+    ///    - id: Unique UUID for this item
+    ///    - name: Text for this item, not necessarily unique
+    ///    - active: Whether the item should be active
     init(id: UUID, text: String, active: Bool) {
         self.id = id
         self.text = text
         self.active = active
+    }
+    
+    /// - Returns: an active item with no text
+    static func empty() -> JListItem {
+        return JListItem(id: UUID(), text: "", active: true)
+    }
+    
+    /// Allows for the items to be removed
+    static func == (lhs: JListItem, rhs: JListItem) -> Bool {
+        return (lhs.id == rhs.id)
+    }
+    
+    // MARK: - Boilerplate to allow for the items to be encoded as JSON and also observable
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case text
+        case active
     }
     
     required init(from decoder: Decoder) throws {
@@ -91,15 +145,11 @@ class JListItem: Codable, Equatable, Identifiable, ObservableObject {
         try container.encode(self.active, forKey: .active)
     }
     
-    static func empty() -> JListItem {
-        return JListItem(id: UUID(), text: "", active: true)
-    }
     
-    static func == (lhs: JListItem, rhs: JListItem) -> Bool {
-        return (lhs.id == rhs.id)
-    }
+    // Mark: - Debug only
     
     #if DEBUG
+    /// An example item that can be used in previews
     static let example = JListItem(
         id: UUID(),
         text: "Do the thing",

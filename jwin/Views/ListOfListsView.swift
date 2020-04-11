@@ -1,53 +1,42 @@
-/*
- List of lists
- 
- TODOS:
-    1. Add new list
- */
 import SwiftUI
 
+/**
+View for the "lists" sub-app
+*/
 struct ListOfListsView: View {
     @ObservedObject var appState: AppState
 
     var body: some View {
         NavigationView {
             List {
+                /// List of lists
                 ForEach(self.appState.lists) {
                     list in
                     ListRow(list: list)
                 }
-                .onDelete(perform: removeRows)
-                .onMove(perform: moveRows)
+                /// Allow for the lists to be deleted and moved
+                .onDelete(perform: { self.appState.removeLists(at: $0)})
+                .onMove(perform: { self.appState.moveLists(from: $0, to: $1) })
                 
+                /// Button to create a new list
                 HStack {
                     Spacer()
-                    Button(action: self.addList) {
+                    Button(action: { self.appState.addList() }) {
                         Text("New list")
                     }
                     Spacer()
                 }
             }
+
+            /// Nav bar with edit button
             .navigationBarTitle("Lists")
             .navigationBarItems(trailing: EditButton())
         }
     }
-    
-    func addList() {
-        self.appState.addList()
-    }
-
-    func removeRows(at offsets: IndexSet) {
-        self.appState.removeLists(at: offsets)
-    }
-
-    func moveRows(from offsets: IndexSet, to destination: Int) {
-        self.appState.moveLists(from: offsets, to: destination)
-    }
 }
 
 struct ListOfListsView_Previews: PreviewProvider {
-    static let appState = AppState.loadDemo()
     static var previews: some View {
-        ListOfListsView(appState: appState)
+        ListOfListsView(appState: AppState.loadDemo())
     }
 }
