@@ -17,6 +17,13 @@ struct AppView: View {
                     Text("Lists")
                 }
             
+            /// The "timing" view with a clock icon on the tab
+            TimingView()
+                .tabItem {
+                    Image(systemName: "stopwatch")
+                    Text("Timing")
+                }
+
             /// The debug view with an appropriate icon
             DebugView(
                 appState: self.appState,
