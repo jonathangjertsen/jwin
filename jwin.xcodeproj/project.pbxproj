@@ -9,25 +9,63 @@
 /* Begin PBXBuildFile section */
 		6DFDD12D2440AFCD00E2B635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD12C2440AFCD00E2B635 /* AppDelegate.swift */; };
 		6DFDD12F2440AFCD00E2B635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD12E2440AFCD00E2B635 /* SceneDelegate.swift */; };
-		6DFDD1312440AFCD00E2B635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1302440AFCD00E2B635 /* ContentView.swift */; };
+		6DFDD1312440AFCD00E2B635 /* ListOfListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */; };
 		6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1322440AFCF00E2B635 /* Assets.xcassets */; };
 		6DFDD1362440AFCF00E2B635 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */; };
 		6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */; };
+		6DFDD1412440B19600E2B635 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1402440B19600E2B635 /* ItemRow.swift */; };
+		6DFDD1432440B5FA00E2B635 /* ListOfItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1422440B5FA00E2B635 /* ListOfItems.swift */; };
+		6DFDD1452440B7F900E2B635 /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1442440B7F900E2B635 /* ListRow.swift */; };
+		6DFDD1472440B8AE00E2B635 /* JList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1462440B8AE00E2B635 /* JList.swift */; };
+		6DFDD1492441F58300E2B635 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1482441F58300E2B635 /* AppState.swift */; };
+		6DFDD14B2441FAAF00E2B635 /* demo_app_state.json in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD14A2441FAAF00E2B635 /* demo_app_state.json */; };
+		6DFDD15B2441FE5900E2B635 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD15A2441FE5900E2B635 /* AppStateTests.swift */; };
+		6DFDD160244222A400E2B635 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD15F244222A400E2B635 /* AppView.swift */; };
+		6DFDD162244223FD00E2B635 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD161244223FD00E2B635 /* DebugView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6DFDD1552441FDB900E2B635 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DFDD1212440AFCD00E2B635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DFDD1282440AFCD00E2B635;
+			remoteInfo = jwin;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6DFDD1292440AFCD00E2B635 /* jwin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jwin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DFDD12C2440AFCD00E2B635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DFDD12E2440AFCD00E2B635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6DFDD1302440AFCD00E2B635 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfListsView.swift; sourceTree = "<group>"; };
 		6DFDD1322440AFCF00E2B635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6DFDD1382440AFCF00E2B635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DFDD13A2440AFCF00E2B635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DFDD1402440B19600E2B635 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
+		6DFDD1422440B5FA00E2B635 /* ListOfItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfItems.swift; sourceTree = "<group>"; };
+		6DFDD1442440B7F900E2B635 /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
+		6DFDD1462440B8AE00E2B635 /* JList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JList.swift; sourceTree = "<group>"; };
+		6DFDD1482441F58300E2B635 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		6DFDD14A2441FAAF00E2B635 /* demo_app_state.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = demo_app_state.json; sourceTree = "<group>"; };
+		6DFDD1502441FDB900E2B635 /* jwinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jwinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DFDD1542441FDB900E2B635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DFDD15A2441FE5900E2B635 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
+		6DFDD15C244204FB00E2B635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6DFDD15F244222A400E2B635 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		6DFDD161244223FD00E2B635 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6DFDD1262440AFCD00E2B635 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DFDD14D2441FDB900E2B635 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,7 +78,9 @@
 		6DFDD1202440AFCD00E2B635 = {
 			isa = PBXGroup;
 			children = (
+				6DFDD15C244204FB00E2B635 /* README.md */,
 				6DFDD12B2440AFCD00E2B635 /* jwin */,
+				6DFDD1512441FDB900E2B635 /* jwinTests */,
 				6DFDD12A2440AFCD00E2B635 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				6DFDD1292440AFCD00E2B635 /* jwin.app */,
+				6DFDD1502441FDB900E2B635 /* jwinTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,9 +97,11 @@
 		6DFDD12B2440AFCD00E2B635 /* jwin */ = {
 			isa = PBXGroup;
 			children = (
+				6DFDD15E244205A000E2B635 /* Views */,
+				6DFDD15D2442058800E2B635 /* Logic */,
 				6DFDD12C2440AFCD00E2B635 /* AppDelegate.swift */,
 				6DFDD12E2440AFCD00E2B635 /* SceneDelegate.swift */,
-				6DFDD1302440AFCD00E2B635 /* ContentView.swift */,
+				6DFDD14A2441FAAF00E2B635 /* demo_app_state.json */,
 				6DFDD1322440AFCF00E2B635 /* Assets.xcassets */,
 				6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */,
 				6DFDD13A2440AFCF00E2B635 /* Info.plist */,
@@ -73,6 +116,37 @@
 				6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6DFDD1512441FDB900E2B635 /* jwinTests */ = {
+			isa = PBXGroup;
+			children = (
+				6DFDD1542441FDB900E2B635 /* Info.plist */,
+				6DFDD15A2441FE5900E2B635 /* AppStateTests.swift */,
+			);
+			path = jwinTests;
+			sourceTree = "<group>";
+		};
+		6DFDD15D2442058800E2B635 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				6DFDD1482441F58300E2B635 /* AppState.swift */,
+				6DFDD1462440B8AE00E2B635 /* JList.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		6DFDD15E244205A000E2B635 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6DFDD1422440B5FA00E2B635 /* ListOfItems.swift */,
+				6DFDD1402440B19600E2B635 /* ItemRow.swift */,
+				6DFDD1442440B7F900E2B635 /* ListRow.swift */,
+				6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */,
+				6DFDD15F244222A400E2B635 /* AppView.swift */,
+				6DFDD161244223FD00E2B635 /* DebugView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +169,24 @@
 			productReference = 6DFDD1292440AFCD00E2B635 /* jwin.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6DFDD14F2441FDB900E2B635 /* jwinTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DFDD1572441FDB900E2B635 /* Build configuration list for PBXNativeTarget "jwinTests" */;
+			buildPhases = (
+				6DFDD14C2441FDB900E2B635 /* Sources */,
+				6DFDD14D2441FDB900E2B635 /* Frameworks */,
+				6DFDD14E2441FDB900E2B635 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DFDD1562441FDB900E2B635 /* PBXTargetDependency */,
+			);
+			name = jwinTests;
+			productName = jwinTests;
+			productReference = 6DFDD1502441FDB900E2B635 /* jwinTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -107,6 +199,11 @@
 				TargetAttributes = {
 					6DFDD1282440AFCD00E2B635 = {
 						CreatedOnToolsVersion = 11.4;
+					};
+					6DFDD14F2441FDB900E2B635 = {
+						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
+						TestTargetID = 6DFDD1282440AFCD00E2B635;
 					};
 				};
 			};
@@ -124,6 +221,7 @@
 			projectRoot = "";
 			targets = (
 				6DFDD1282440AFCD00E2B635 /* jwin */,
+				6DFDD14F2441FDB900E2B635 /* jwinTests */,
 			);
 		};
 /* End PBXProject section */
@@ -136,6 +234,14 @@
 				6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */,
 				6DFDD1362440AFCF00E2B635 /* Preview Assets.xcassets in Resources */,
 				6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */,
+				6DFDD14B2441FAAF00E2B635 /* demo_app_state.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DFDD14E2441FDB900E2B635 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,11 +254,34 @@
 			files = (
 				6DFDD12D2440AFCD00E2B635 /* AppDelegate.swift in Sources */,
 				6DFDD12F2440AFCD00E2B635 /* SceneDelegate.swift in Sources */,
-				6DFDD1312440AFCD00E2B635 /* ContentView.swift in Sources */,
+				6DFDD160244222A400E2B635 /* AppView.swift in Sources */,
+				6DFDD1472440B8AE00E2B635 /* JList.swift in Sources */,
+				6DFDD1492441F58300E2B635 /* AppState.swift in Sources */,
+				6DFDD1452440B7F900E2B635 /* ListRow.swift in Sources */,
+				6DFDD162244223FD00E2B635 /* DebugView.swift in Sources */,
+				6DFDD1412440B19600E2B635 /* ItemRow.swift in Sources */,
+				6DFDD1312440AFCD00E2B635 /* ListOfListsView.swift in Sources */,
+				6DFDD1432440B5FA00E2B635 /* ListOfItems.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DFDD14C2441FDB900E2B635 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DFDD15B2441FE5900E2B635 /* AppStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6DFDD1562441FDB900E2B635 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DFDD1282440AFCD00E2B635 /* jwin */;
+			targetProxy = 6DFDD1552441FDB900E2B635 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */ = {
@@ -286,8 +415,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"jwin/Preview Content\"";
+				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,8 +436,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"jwin/Preview Content\"";
+				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,6 +448,51 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6DFDD1582441FDB900E2B635 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
+				INFOPLIST_FILE = jwinTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jwin.jwinTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jwin.app/jwin";
+			};
+			name = Debug;
+		};
+		6DFDD1592441FDB900E2B635 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
+				INFOPLIST_FILE = jwinTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jwin.jwinTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jwin.app/jwin";
 			};
 			name = Release;
 		};
@@ -335,6 +513,15 @@
 			buildConfigurations = (
 				6DFDD13E2440AFCF00E2B635 /* Debug */,
 				6DFDD13F2440AFCF00E2B635 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DFDD1572441FDB900E2B635 /* Build configuration list for PBXNativeTarget "jwinTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DFDD1582441FDB900E2B635 /* Debug */,
+				6DFDD1592441FDB900E2B635 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

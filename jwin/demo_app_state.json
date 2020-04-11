@@ -1,0 +1,51 @@
+{
+    "lists": [
+        {
+            "id": "EF1CC5BB-4785-4D8E-AB98-5FA4E00B6A66",
+            "name": "Handleliste 1",
+            "items": [
+                {
+                    "id": "36A7CC40-18C1-48E5-BCD8-3B42D43BEAEE",
+                    "text": "Egg",
+                    "active": true
+                },
+                {
+                    "id": "CFB8C2DB-3478-4A10-92FA-3D2A2D5324FB",
+                    "text": "Banan",
+                    "active": true
+                },
+                {
+                    "id": "8903A204-F5C1-4D5C-A0A1-5C0ECD27FDD7",
+                    "text": "Kjøtt",
+                    "active": false
+                }
+            ]
+        },
+        {
+            "id": "EDCD038C-036F-4C40-826F-61C88CD84DDD",
+            "name": "Handleliste 2",
+            "items": [
+                {
+                    "id": "82B28AFF-BB29-4186-AA07-04959180D81A",
+                    "text": "Real turmat",
+                    "active": true
+                },
+                {
+                    "id": "190E1A9D-20A4-4F98-AA54-B192E1C4D7B9",
+                    "text": "Kjøttkaker",
+                    "active": false
+                },
+                {
+                    "id": "D44AAEBC-BF4F-42CD-8C37-0FEF772A5B69",
+                    "text": "Kaffe",
+                    "active": true
+                },
+                {
+                    "id": "2BAD20C5-D007-4BBE-B074-8CF0F256A42F",
+                    "text": "Enkeltstående orrhøne med ekstra god saus",
+                    "active": false
+                }
+            ]
+        }
+    ]
+}
