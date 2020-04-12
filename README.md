@@ -16,6 +16,13 @@ Simple to-do list functionality
 * Each element has one line of text and may be marked as active or inactive
 * No support for anything else (nested lists etc)
 
+### Reminders
+
+Reminder functionality
+
+* A single list of reminders
+* TODO: notifications
+
 ### Debug
 
 Just stuff for debugging on the device.

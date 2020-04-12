@@ -1,8 +1,11 @@
 import SwiftUI
 
+/// View for the "reminders" sub-app
+/// TODO: - fix timezone issues
+/// TODO: - improve sync with notification center
 struct RemindView: View {
     @ObservedObject var reminders: Reminders
-    @ObservedObject var newReminder = Reminder.empty()
+    @ObservedObject private var newReminder = Reminder.empty()
     
     var body: some View {
         NavigationView {
@@ -45,7 +48,7 @@ struct RemindView: View {
                         }
                         
                         /// Button that creates the reminder when pressed
-                        Button(action: { self.reminders.add(self.newReminder.transfer()) }) {
+                        Button(action: { self.reminders.add(self.newReminder.submit()) }) {
                             HStack {
                                 Spacer()
                                 Text("Create")

@@ -1,4 +1,7 @@
 {
+    "config": {
+        "permissionsGranted": false
+    },
     "reminders": {
         "reminders": [
             {

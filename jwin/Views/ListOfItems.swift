@@ -10,7 +10,7 @@ TODOS:
 */
 struct ListOfItems: View {
     @ObservedObject var list: JList
-    @State var showingActive: Bool = true
+    @State private var showingActive: Bool = true
     
     var body: some View {
         VStack {

@@ -98,12 +98,37 @@ class Reminder: Codable, Equatable, Identifiable, ObservableObject {
         return Reminder(id: UUID(), text: "", time: Date())
     }
     
-    /// Returns a copy of the reminder with a new UUID, then resets self.
+    /// Returns a copy of the reminder with a new UUID, submits the notification, then resets self.
     /// - Returns: A copy of the reminder
-    func transfer() -> Reminder {
+    func submit() -> Reminder {
+        /// Create a copy of this reminder with a new UUID
         let result = Reminder(id: UUID(), text: self.text, time: self.time)
+        
+        /// Reset this one so it can be reused
         self.text = ""
         self.time = Date()
+
+        /// Set up notification content
+        let content = UNMutableNotificationContent()
+        content.title = "Reminder"
+        content.body = result.text
+        content.categoryIdentifier = "alarm"
+        content.sound = UNNotificationSound.default
+
+        /// Set up notification request
+        let request = UNNotificationRequest(
+            identifier: result.id.uuidString,
+            content: content,
+            trigger: UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute, .second],
+                from: result.time
+            ), repeats: false)
+        )
+        
+        /// Submit the request
+        UNUserNotificationCenter.current().add(request)
+        
+        /// Return the reminder object
         return result
     }
     

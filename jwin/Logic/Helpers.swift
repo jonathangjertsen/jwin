@@ -28,3 +28,9 @@ class DatePoke: ObservableObject {
         self.lastPoked = Date()
     }
 }
+
+func inMainThread(_ code: @escaping () -> ()) {
+    DispatchQueue.main.async {
+        code()
+    }
+}

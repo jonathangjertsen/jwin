@@ -3,7 +3,7 @@ import SwiftUI
 /// A row in the list of lists representing an individual list.
 /// Links to the detail view for the list.
 struct ListRow: View {
-    var list: JList
+    @ObservedObject var list: JList
     
     var body: some View {
         /// Link to the detail view for the list

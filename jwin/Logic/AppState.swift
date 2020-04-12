@@ -1,6 +1,11 @@
 import SwiftUI
 import UIKit
 
+/// Container for assorted configuration bits
+struct AppStateConfig: Codable {
+    var permissionsGranted: Bool
+}
+
 /// Bundles up all of the state of the app
 class AppState: Codable, ObservableObject {
     /// A list of lists for the "lists" sub-app
@@ -8,6 +13,9 @@ class AppState: Codable, ObservableObject {
     
     /// A list of reminders for the "reminders" sub-app
     @Published var reminders: Reminders
+    
+    /// Assorted configuration bits
+    @Published var config: AppStateConfig
     
     /// Loads the app state from an URL
     /// - Parameter url: The url from which to load the app state
@@ -102,6 +110,12 @@ class AppState: Codable, ObservableObject {
         self.lists.move(fromOffsets: source, toOffset: destination)
     }
     
+    /// Update state on whether permissions are granted
+    /// - Parameter granted: Whether permissions are granted
+    func permissions(granted: Bool) {
+        self.config.permissionsGranted = granted
+    }
+    
     /// - Returns: The default URL if available, otherwise `nil`
     static func defaultUrl() -> URL? {
         return try? FileManager.default.url(
@@ -147,17 +161,20 @@ class AppState: Codable, ObservableObject {
     enum CodingKeys: String, CodingKey {
         case lists
         case reminders
+        case config
     }
     
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.lists = try values.decode([JList].self, forKey: .lists)
         self.reminders = try values.decode(Reminders.self, forKey: .reminders)
+        self.config = try values.decode(AppStateConfig.self, forKey: .config)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.lists, forKey: .lists)
         try container.encode(self.reminders, forKey: .reminders)
+        try container.encode(self.config, forKey: .config)
     }
 }

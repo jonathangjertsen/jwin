@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 /// View of random stuff for debugging
 struct DebugView: View {
@@ -13,26 +14,37 @@ struct DebugView: View {
     @State private var saveAlertText: String = ""
     
     var body: some View {
-        VStack {
+        Form {
             /// Shows where the state was loaded from
             /// Kinda ugly, but OK since it is just debug info
-            HStack {
-                Text("State URL").bold()
+            Section(header: Text("State URL")) {
                 Text("\(self.appStateUrl)")
-            }.padding()
+            }
 
-            HStack {
-                Text("Last save").bold()
+            Section(header: Text("Last save time")) {
                 Text("\(self.lastStateSave.lastPoked)")
-            }.padding()
+            }
             
-            /// Spacer to move the info to the top and the buttons to the end
-            Spacer()
-
-            /// Button for storing the app state
-            Button(action: self.storeAppState) {
-                Text("Save state")
-            }.padding()
+            Section(header: Text("Permissions granted?")) {
+                Text("\(self.appState.config.permissionsGranted ? "Yes" : "No")")
+            }
+            
+            Section(header: Text("Actions")) {
+                /// Button for sending a demo notification
+                Button(action: self.sendDemoNotification) {
+                    Text("Send demo notification")
+                }
+                
+                /// Button for  requesting permissions
+                Button(action: self.requestPermissions) {
+                    Text("Request permissions")
+                }
+                
+                /// Button for storing the app state
+                Button(action: self.storeAppState) {
+                    Text("Save state")
+                }
+            }
         }
 
         /// Alert showing the result of saving
@@ -67,6 +79,38 @@ struct DebugView: View {
         
         /// Indicate that we would like to show the alert now
         self.showingSaveAlert = true
+    }
+    
+    /// Sends a demo notification after 2 s
+    func sendDemoNotification() {
+        let center = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = "Demo notification"
+        content.body = "Demo notification content"
+        content.categoryIdentifier = "alarm"
+        content.userInfo = ["customDate": "fizzbuss"]
+        content.sound = UNNotificationSound.default
+
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute, .second],
+                from: Date().addingTimeInterval(2.0)
+            ), repeats: false)
+        )
+        center.add(request)
+    }
+    
+    /// Requests permissions for the app
+    func requestPermissions() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) {
+            (granted, error) in
+            inMainThread {
+                self.appState.permissions(granted: granted)
+            }
+        }
     }
 }
 
