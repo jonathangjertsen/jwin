@@ -13,32 +13,46 @@ struct ListOfItems: View {
     @State var showingActive: Bool = true
     
     var body: some View {
-        List {
-            /// Show each of the items
-            /// Filter out inactive item if requested
-            ForEach(self.list.items.filter { showingActive || $0.active }) {
-                item in
-                ItemRow(item: item)
-            }
-            /// Allow each item to be deleted and moved
-            .onDelete(perform:  { self.list.remove(at: $0) })
-            .onMove(perform: { self.list.move(from: $0, to: $1) })
-
-            /// Placeholder entry for adding a new item
-            HStack {
-                /// Leading spacer for center alignment
-                Spacer()
-                
-                /// Button to press
-                Button(action: { self.list.addEmpty() }) {
-                    Text("New").padding()
+        VStack {
+            List {
+                /// Show each of the items
+                /// Filter out inactive item if requested
+                ForEach(self.list.items.filter { showingActive || $0.active }) {
+                    item in
+                    ItemRow(item: item)
                 }
-                
-                /// Trailing spacer for center alignment
-                Spacer()
+                /// Allow each item to be deleted and moved
+                .onDelete(perform:  { self.list.remove(at: $0) })
+                .onMove(perform: { self.list.move(from: $0, to: $1) })
+
+                /// Placeholder entry for adding a new item
+                HStack {
+                    /// Leading spacer for center alignment
+                    Spacer()
+                    
+                    /// Button to press
+                    Button(action: { self.list.addEmpty() }) {
+                        Text("New").padding()
+                    }
+                    
+                    /// Trailing spacer for center alignment
+                    Spacer()
+                }
+            }
+            
+            /// Move the configuration to the end
+            Spacer()
+            
+            /// List edit
+            NavigationLink(destination: ListOfItemsConfigView(list: self.list)) {
+                HStack {
+                    Spacer()
+                    Text("Configure \(self.list.name)")
+                        .padding()
+                    Spacer()
+                }
             }
         }
-
         /// Navbar title, inline to prevent the link back to the main page from breaking the line
         .navigationBarTitle(
             Text(self.list.name),
