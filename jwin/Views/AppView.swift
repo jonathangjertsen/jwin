@@ -20,6 +20,13 @@ struct AppView: View {
                     Text("Lists")
                 }
             
+            /// The "reminders" view with a reminder icon on the tab
+            RemindView(reminders: self.appState.reminders)
+                .tabItem {
+                    Image(systemName: "bell.circle")
+                    Text("Remind")
+            }
+            
             /// The debug view with an appropriate icon
             DebugView(
                 appState: self.appState,

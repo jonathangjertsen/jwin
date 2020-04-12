@@ -1,4 +1,18 @@
 {
+    "reminders": {
+        "reminders": [
+            {
+                "id": "EF1CC5BB-4785-4D8E-AB98-5012310B6A66",
+                "text": "Do the thing!",
+                "time": "2021-01-03 07:11:11"
+            },
+            {
+                "id": "EF1CC5BB-4785-4EEE-AB98-5012310B6A66",
+                "text": "Do the other thing!",
+                "time": "2021-02-06 07:12:11"
+            }
+        ]
+    },
     "lists": [
         {
             "id": "EF1CC5BB-4785-4D8E-AB98-5FA4E00B6A66",

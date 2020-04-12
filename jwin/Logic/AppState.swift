@@ -6,12 +6,17 @@ class AppState: Codable, ObservableObject {
     /// A list of lists for the "lists" sub-app
     @Published var lists: [JList]
     
+    /// A list of reminders for the "reminders" sub-app
+    @Published var reminders: Reminders
+    
     /// Loads the app state from an URL
     /// - Parameter url: The url from which to load the app state
     /// - Throws: any exceptions from loading the URL or decoding the data
     /// - Returns: an AppState representation of the data
     static func load(from url: URL) throws -> Self {
-        return try JSONDecoder().decode(
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(.reminderFormat)
+        return try decoder.decode(
             Self.self,
             from: Data(contentsOf: url)
         )
@@ -21,7 +26,9 @@ class AppState: Codable, ObservableObject {
     /// - Parameter url: The url to which the app state should be saved
     /// - Throws: any exceptions from encoding the data or writing to the URL
     func save(to url: URL) throws {
-        try JSONEncoder().encode(self).write(to: url)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(.reminderFormat)
+        try encoder.encode(self).write(to: url)
     }
     
     /// Saves the app state to the default URL.
@@ -118,10 +125,11 @@ class AppState: Codable, ObservableObject {
     
     /// - Returns: an AppState based on the demo app state that is bundled with the app
     static func loadDemo() -> AppState {
-        guard let appState = try? AppState.load(from: self.demoUrl()) else {
-            fatalError("Failed to load demo app")
+        do {
+            return try AppState.load(from: self.demoUrl())
+        } catch {
+            fatalError("Failed to load demo app: \(error)")
         }
-        return appState
     }
     
     static func loadFromDefaultOrDemo() -> (AppState, URL) {
@@ -138,15 +146,18 @@ class AppState: Codable, ObservableObject {
 
     enum CodingKeys: String, CodingKey {
         case lists
+        case reminders
     }
     
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.lists = try values.decode([JList].self, forKey: .lists)
+        self.reminders = try values.decode(Reminders.self, forKey: .reminders)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.lists, forKey: .lists)
-    }    
+        try container.encode(self.reminders, forKey: .reminders)
+    }
 }
