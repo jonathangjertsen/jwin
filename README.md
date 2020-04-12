@@ -30,6 +30,5 @@ Just stuff for debugging on the device.
 ## To-do
 
 * Graceful schema migration
-* Delete pending notifications from reminders sub-app (available from debug view though)
 * Cloud storage
 
