@@ -4,6 +4,7 @@ import SwiftUI
 struct DebugView: View {
     @ObservedObject var appState: AppState
     var appStateUrl: URL
+    @ObservedObject var lastStateSave: DatePoke
     
     /// Set to true if an alert should show
     @State private var showingSaveAlert = false
@@ -20,6 +21,11 @@ struct DebugView: View {
                 Text("\(self.appStateUrl)")
             }.padding()
 
+            HStack {
+                Text("Last save").bold()
+                Text("\(self.lastStateSave.lastPoked)")
+            }.padding()
+            
             /// Spacer to move the info to the top and the buttons to the end
             Spacer()
 
@@ -48,6 +54,7 @@ struct DebugView: View {
             url in
             /// Show text indicating success (only when saving explicitly)
             self.saveAlertText = "Successfully wrote to \(url)"
+            self.lastStateSave.poke()
         }, onError: {
             url in
             /// Show an appropriate text depending on whether we got the right URL
@@ -67,7 +74,8 @@ struct DebugView_Previews: PreviewProvider {
     static var previews: some View {
         DebugView(
             appState: AppState.loadDemo(),
-            appStateUrl: AppState.demoUrl()
+            appStateUrl: AppState.demoUrl(),
+            lastStateSave: DatePoke()
         )
     }
 }

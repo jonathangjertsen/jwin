@@ -1,18 +1,39 @@
-
 import UIKit
 import SwiftUI
+
+/// Sets up everything the app needs and creates a view
+/// - Returns: The top-level SwiftUI View for the app
+func startApp() -> AppView {
+    /// Load app state
+    let (appState, url) = AppState.loadFromDefaultOrDemo()
+
+    /// Initialize the view
+    let view = AppView(
+        appState: appState,
+        appStateUrl: url,
+        lastStateSave: DatePoke()
+    )
+
+    /// Set up a timer to save the state to disk every 10-15 s
+    _ = appState.saveToDefaultUrlEvery(
+        n: 10.0,
+        toleranceFraction: 0.5,
+        onSuccess: { _ in view.saveSuccess() },
+        onError: { _ in view.saveFail() }
+    )
+
+    return view
+}
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var appState: AppState? = nil
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let (appState, url) = AppState.loadFromDefaultOrDemo()
-        let contentView = AppView(appState: appState, appStateUrl: url)
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: startApp())
             self.window = window
             window.makeKeyAndVisible()
         }

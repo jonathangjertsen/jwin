@@ -50,14 +50,15 @@ class AppState: Codable, ObservableObject {
     ///   - onSuccess: What to do each time the save succeeds
     ///   - url: The default URL
     ///   - onError: What to do (in addition to stopping the timer) if saving fials
-    ///   - urlOrNil: The default URL if it was available (but the saving failed), otherwise `nil`. 
+    ///   - urlOrNil: The default URL if it was available (but the saving failed), otherwise `nil`.
     /// - Returns: The timer that was created
-    func saveEvery(
+    func saveToDefaultUrlEvery(
         n seconds: Double,
+        toleranceFraction: Double,
         onSuccess: @escaping (_ url: URL) -> (),
         onError: @escaping (_ urlOrNil: URL?) -> ()
     ) -> Timer {
-        return Timer.scheduledTimer(withTimeInterval: seconds, repeats: true) {
+        let timer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: true) {
             timer in
             self.saveDefault(onSuccess: onSuccess, onError: {
                 urlOrNil in
@@ -65,6 +66,8 @@ class AppState: Codable, ObservableObject {
                 onError(urlOrNil)
             })
         }
+        timer.tolerance = seconds * toleranceFraction.clamp(between: 0.0, and: 1.0)
+        return timer
     }
     
     /// Adds a new empty list.
@@ -145,6 +148,5 @@ class AppState: Codable, ObservableObject {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.lists, forKey: .lists)
-    }
-    
+    }    
 }
