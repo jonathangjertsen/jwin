@@ -7,6 +7,9 @@ struct DebugView: View {
     var appStateUrl: URL
     @ObservedObject var lastStateSave: DatePoke
     
+    /// List of pending notifications
+    @State private var pendingNotifications: [UNNotificationRequest] = []
+    
     /// Set to true if an alert should show
     @State private var showingSaveAlert = false
     
@@ -16,17 +19,50 @@ struct DebugView: View {
     var body: some View {
         Form {
             /// Shows where the state was loaded from
-            /// Kinda ugly, but OK since it is just debug info
             Section(header: Text("State URL")) {
-                Text("\(self.appStateUrl)")
+                Text("\(self.appStateUrl)").font(.footnote)
             }
 
+            /// Shows when the state was last saved
             Section(header: Text("Last save time")) {
                 Text("\(self.lastStateSave.lastPoked)")
             }
             
+            /// Shows whether permissions have been granted
             Section(header: Text("Permissions granted?")) {
                 Text("\(self.appState.config.permissionsGranted ? "Yes" : "No")")
+            }
+            
+            /// Shows a list of all pending notifications and allows for them to be deleted
+            if !self.pendingNotifications.isEmpty {
+                Section(header: Text("Pending notifications")) {
+                    ForEach(self.pendingNotifications, id:\.identifier) {
+                        notification in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Title: \(notification.content.title)")
+                                    .font(.caption)
+                                Text("Date: \(notification.printableTrigger())")
+                                    .font(.caption)
+                                Text("UUID: \(notification.identifier)")
+                                    .font(.caption)
+                            }
+
+                            Spacer()
+
+                            Button(action: {
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [
+                                    notification.identifier
+                                ])
+                                self.checkPendingNotifications()
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                                    .padding()
+                            }
+                        }
+                    }
+                }
             }
             
             Section(header: Text("Actions")) {
@@ -38,6 +74,11 @@ struct DebugView: View {
                 /// Button for  requesting permissions
                 Button(action: self.requestPermissions) {
                     Text("Request permissions")
+                }
+                
+                /// Button for  checking pending notifications
+                Button(action: self.checkPendingNotifications) {
+                    Text("Check pending notifications")
                 }
                 
                 /// Button for storing the app state
@@ -58,6 +99,11 @@ struct DebugView: View {
 
         /// Nav bar
         .navigationBarTitle("Debug")
+        
+        /// Check pending notifications on view
+        .onAppear {
+            self.checkPendingNotifications()
+        }
     }
 
     /// Stores the app state immediately and triggers an alert with info on whether it succeeded
@@ -83,12 +129,9 @@ struct DebugView: View {
     
     /// Sends a demo notification after 2 s
     func sendDemoNotification() {
-        let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
-        content.title = "Demo notification"
-        content.body = "Demo notification content"
+        content.title = "Demo notification content with delay of 2 seconds"
         content.categoryIdentifier = "alarm"
-        content.userInfo = ["customDate": "fizzbuss"]
         content.sound = UNNotificationSound.default
 
         let request = UNNotificationRequest(
@@ -99,17 +142,27 @@ struct DebugView: View {
                 from: Date().addingTimeInterval(2.0)
             ), repeats: false)
         )
-        center.add(request)
+
+        UNUserNotificationCenter.current().add(request)
+        
+        self.checkPendingNotifications()
     }
     
     /// Requests permissions for the app
     func requestPermissions() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .badge, .sound]) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             (granted, error) in
             inMainThread {
                 self.appState.permissions(granted: granted)
             }
+        }
+    }
+    
+    /// Check pending ontifications
+    func checkPendingNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests {
+            requests in
+            self.pendingNotifications = requests
         }
     }
 }

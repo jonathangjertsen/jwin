@@ -17,6 +17,9 @@ struct RemindView: View {
                         HStack {
                             /// Show the text on the left
                             Text("\(reminder.text)")
+                                .foregroundColor(
+                                    reminder.time > Date() ? .primary : .secondary
+                                )
                             
                             /// Push the two pieces apart
                             Spacer()
@@ -26,6 +29,9 @@ struct RemindView: View {
                                 from: reminder.time
                             ))
                                 .font(.caption)
+                                .foregroundColor(
+                                    reminder.time > Date() ? .primary : .secondary
+                                )
                         }
                     }
                     /// Allow for reminders to be deleted

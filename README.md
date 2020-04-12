@@ -21,8 +21,15 @@ Simple to-do list functionality
 Reminder functionality
 
 * A single list of reminders
-* TODO: notifications
+* Sends notifications
 
 ### Debug
 
 Just stuff for debugging on the device.
+
+## To-do
+
+* Graceful schema migration
+* Proper timezone handling for reminders
+* Cloud storage
+

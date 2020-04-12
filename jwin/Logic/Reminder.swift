@@ -61,7 +61,7 @@ class Reminders: Codable, ObservableObject {
     /// An example list that can be used in previews.
     static let example = Reminders([
         Reminder(id: UUID(), text: "Do the thing!", time: Date()),
-        Reminder(id: UUID(), text: "Do the other thing!", time: Date())
+        Reminder(id: UUID(), text: "Do the other thing!", time: Date().addingTimeInterval(5))
     ])
     #endif
 }
@@ -110,7 +110,7 @@ class Reminder: Codable, Equatable, Identifiable, ObservableObject {
 
         /// Set up notification content
         let content = UNMutableNotificationContent()
-        content.title = "Reminder"
+        content.title = result.text
         content.body = result.text
         content.categoryIdentifier = "alarm"
         content.sound = UNNotificationSound.default
@@ -119,14 +119,18 @@ class Reminder: Codable, Equatable, Identifiable, ObservableObject {
         let request = UNNotificationRequest(
             identifier: result.id.uuidString,
             content: content,
-            trigger: UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents(
-                [.year, .month, .day, .hour, .minute, .second],
-                from: result.time
-            ), repeats: false)
+            trigger: UNTimeIntervalNotificationTrigger(
+                timeInterval: result.time.timeIntervalSince(Date()),
+                repeats: false
+            )
         )
         
         /// Submit the request
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) {
+            errorOrNil in
+            guard let error = errorOrNil else { return }
+            print(error)
+        }
         
         /// Return the reminder object
         return result
