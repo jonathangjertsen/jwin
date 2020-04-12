@@ -1,11 +1,63 @@
 import SwiftUI
 
+fileprivate extension Reminder {
+    /// - Returns: whether the reminder is old
+    func isOld() -> Bool {
+        return self.time <= Date()
+    }
+    
+    /// - Parameter pendingNotifications: the list of pending notification requests
+    /// - Returns: whether the reminder  is associated with an actual pending notification request
+    func isActive(given pendingNotifications: [UNNotificationRequest]) -> Bool {
+        return self.associatedNotification(given: pendingNotifications) != nil
+    }
+    
+    /// - Parameter pendingNotifications: the list of pending notification requests
+    /// - Returns: whether the reminder is out of sync (in the future, but not associated with any pending requests)
+    func isOutOfSync(given pendingNotifications: [UNNotificationRequest]) -> Bool {
+        return !isOld() && !isActive(given: pendingNotifications)
+    }
+    
+    /// - Parameter pendingNotifications: the list of pending notification requests
+    /// - Returns: the associated pending notification request if any, otherwise nil
+    func associatedNotification(given pendingNotifications: [UNNotificationRequest]) -> UNNotificationRequest? {
+        return pendingNotifications.first {
+            $0.identifier == self.id.uuidString
+        }
+    }
+}
+
+fileprivate extension Color {
+    static let active = Color.green
+    static let old = Color.secondary
+    static let outOfSync = Color.orange
+    
+    /// - Parameters:
+    ///   - reminder: the reminder on which the color depends
+    ///   - pendingNotifications: the list of pending notification requests
+    /// - Returns: a color that depends on whether the reminder is active, old, or out of sync.
+    static func dependingOn(
+        reminder: Reminder,
+        given pendingNotifications: [UNNotificationRequest]
+    ) -> Color {
+        reminder.isActive(given: pendingNotifications)
+            ? Color.active
+            : reminder.isOld()
+            ? Color.old
+            : Color.outOfSync
+    }
+}
+
 /// View for the "reminders" sub-app
-/// TODO: - fix timezone issues
-/// TODO: - improve sync with notification center
 struct RemindView: View {
     @ObservedObject var reminders: Reminders
     @ObservedObject private var newReminder = Reminder.empty()
+
+    /// List of pending notifications
+    @State private var pendingNotifications: [UNNotificationRequest] = []
+
+    /// Controls whether to show an alert that adding a reminder failed
+    @State private var failedToAddReminderNotification: Bool = false
     
     var body: some View {
         NavigationView {
@@ -18,7 +70,10 @@ struct RemindView: View {
                             /// Show the text on the left
                             Text("\(reminder.text)")
                                 .foregroundColor(
-                                    reminder.time > Date() ? .primary : .secondary
+                                    .dependingOn(
+                                        reminder: reminder,
+                                        given: self.pendingNotifications
+                                    )
                                 )
                             
                             /// Push the two pieces apart
@@ -30,18 +85,20 @@ struct RemindView: View {
                             ))
                                 .font(.caption)
                                 .foregroundColor(
-                                    reminder.time > Date() ? .primary : .secondary
+                                    .dependingOn(
+                                        reminder: reminder,
+                                        given: self.pendingNotifications
+                                    )
                                 )
                         }
                     }
                     /// Allow for reminders to be deleted
-                    .onDelete(perform: { self.reminders.remove(at: $0 )})
+                    .onDelete(perform: self.clearSingle)
                 }
+                /// Limit the height of the list so that new reminders can be added more easily
+                .frame(height: 200)
                 
-                /// Push the "new reminder" form downwards
-                Spacer()
-                
-                /// Form for adding a new reminder
+                /// Form for adding a new reminder and stuff
                 Form {
                     /// Header for the form
                     Section(header: Text("New reminder")) {
@@ -54,17 +111,105 @@ struct RemindView: View {
                         }
                         
                         /// Button that creates the reminder when pressed
-                        Button(action: { self.reminders.add(self.newReminder.submit()) }) {
-                            HStack {
-                                Spacer()
-                                Text("Create")
-                                Spacer()
-                            }
-                        }
+                        CenteredButton(text: "Create", action: self.submitNewReminder)
+                    }
+                    
+                    /// Buttons to clear reminders
+                    Section(header: Text("Clear reminders")) {
+                        /// Button to clear all reminders and notifications
+                        CenteredButton(
+                            text: "Clear all + notifications",
+                            action: self.clearAll
+                        )
+                        
+                        /// Button to clear only the old and out of sync reminders
+                        CenteredButton(
+                            text: "Clear old",
+                            action: self.clearOldAndOutOfSync
+                        )
                     }
                 }
             }
+            /// Set title in navigation view
             .navigationBarTitle("Reminders")
+                
+            /// Alert to show if we failed to add a notification for some reason
+            .alert(isPresented: $failedToAddReminderNotification) {
+                Alert(title: Text("Failed to add notification"))
+            }
+                
+            /// Get the pending notificatinos on load
+            .onAppear {
+                self.checkPendingNotifications()
+            }
+        }
+    }
+    
+    /// Check pending ontifications
+    func checkPendingNotifications(code: (() -> ())? = nil) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests {
+            requests in
+            self.pendingNotifications = requests
+            if let code = code {
+                inMainThread(code)
+            }
+        }
+    }
+    
+    /// Submit the reminder in the form
+    func submitNewReminder() {
+        guard let submittedReminder = self.newReminder.submit() else {
+            self.failedToAddReminderNotification = true
+            return
+        }
+        self.reminders.add(submittedReminder)
+        self.checkPendingNotifications()
+    }
+    
+    /// Clears a  (could in principle clear multiple) reminder and associated notification(s)
+    /// - Parameter indices: indices to clear
+    func clearSingle(indices: IndexSet) {
+        self.checkPendingNotifications {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(
+                withIdentifiers: Array(indices.compactMap {
+                    if let request = self.reminders.reminders[$0].associatedNotification(
+                        given: self.pendingNotifications
+                    ) {
+                        return request.identifier
+                    } else {
+                        return nil
+                    }
+                })
+            )
+
+            self.reminders.remove(at: indices)
+        }
+    }
+    
+    /// Clear every reminder and all associated notifications
+    func clearAll() {
+        self.checkPendingNotifications {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(
+                withIdentifiers: Array(Set(self.pendingNotifications.map {
+                    $0.identifier
+                }).union(Set(self.reminders.reminders.map {
+                    $0.id.uuidString
+                })))
+            )
+            self.reminders.removeAll()
+            self.checkPendingNotifications()
+        }
+    }
+    
+    /// Clear old and out of sync reminders
+    func clearOldAndOutOfSync() {
+        self.checkPendingNotifications {
+            let indexesToRemove = self.reminders.reminders.enumerated().filter {
+                index, reminder in
+                reminder.isOld() || reminder.isOutOfSync(given: self.pendingNotifications)
+            }.map { index, reminder in index }
+            
+            self.reminders.remove(at: IndexSet(indexesToRemove))
         }
     }
 }

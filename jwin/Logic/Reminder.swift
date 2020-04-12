@@ -30,6 +30,11 @@ class Reminders: Codable, ObservableObject {
         self.reminders.remove(atOffsets: offsets)
     }
     
+    /// Removes all reminders
+    func removeAll() {
+        self.reminders.removeAll()
+    }
+    
     /// Moves the given indices in the list.
     ///
     /// - Parameters:
@@ -100,13 +105,20 @@ class Reminder: Codable, Equatable, Identifiable, ObservableObject {
     
     /// Returns a copy of the reminder with a new UUID, submits the notification, then resets self.
     /// - Returns: A copy of the reminder
-    func submit() -> Reminder {
+    func submit() -> Reminder? {
         /// Create a copy of this reminder with a new UUID
         let result = Reminder(id: UUID(), text: self.text, time: self.time)
         
+        /// Make sure the reminder is in the future
+        let now = Date()
+        let timeFromNowToReminder = result.time.timeIntervalSince(now)
+        if timeFromNowToReminder <= 0 {
+            return nil
+        }
+        
         /// Reset this one so it can be reused
         self.text = ""
-        self.time = Date()
+        self.time = now
 
         /// Set up notification content
         let content = UNMutableNotificationContent()
@@ -120,7 +132,7 @@ class Reminder: Codable, Equatable, Identifiable, ObservableObject {
             identifier: result.id.uuidString,
             content: content,
             trigger: UNTimeIntervalNotificationTrigger(
-                timeInterval: result.time.timeIntervalSince(Date()),
+                timeInterval: timeFromNowToReminder,
                 repeats: false
             )
         )

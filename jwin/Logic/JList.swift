@@ -11,7 +11,6 @@ class JList: Codable, Identifiable, ObservableObject {
     /// All of the items in the list
     @Published var items: [JListItem]
     
-
     /// Trivial initializer for JList
     ///
     /// - Parameters:
