@@ -116,14 +116,24 @@ class AppState: Codable, ObservableObject {
         self.config.permissionsGranted = granted
     }
     
-    /// - Returns: The default URL if available, otherwise `nil`
-    static func defaultUrl() -> URL? {
+    /// - Returns: URL for a file on the file system if available, otherwise nil
+    static func fileUrl(for name: String) -> URL? {
         return try? FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
             create: false
-        ).appendingPathComponent("app_state.json")
+        ).appendingPathComponent(name, isDirectory: false)
+    }
+    
+    /// - Returns: The default URL if available, otherwise `nil`
+    static func defaultUrl() -> URL? {
+        return self.fileUrl(for: "app_state.json")
+    }
+    
+    /// - Returns: The backup URL for this moment if available, otherwise `nil`
+    static func backupUrl(timestamp: Int) -> URL? {
+        return self.fileUrl(for: "app_state_backup_\(timestamp).json")
     }
     
     /// - Returns: URL to the demo app state (bundled with the app, guaranteed to be available)
@@ -146,14 +156,40 @@ class AppState: Codable, ObservableObject {
         }
     }
     
+    /// Tries to load the app state from the default location.
+    ///
+    /// If the default location does not have any file, it should be safe to load the demo and use that going forward,
+    /// since it will not overwrite anything.
+    ///
+    /// If there *is* a file in the default location, but it does not load correctly for some reason (old schema or whatever),
+    /// then back it up to the backup URL and THEN load the demo url.
+    /// - Returns: the app state and associated URL as a tuple
     static func loadFromDefaultOrDemo() -> (AppState, URL) {
         if let url = AppState.defaultUrl() {
             if let appState = try? AppState.load(from: url) {
+                print("Loaded from \(url)")
                 return (appState, url)
+            } else {
+                self.makeBackup(from: url)
             }
         }
         
         return (loadDemo(), AppState.demoUrl())
+    }
+    
+    static func makeBackup(from url: URL) {
+        if let backupUrl = AppState.backupUrl(
+            timestamp: Int(Date().timeIntervalSince1970)
+            ) {
+            do {
+                try FileManager.default.copyItem(at: url, to: backupUrl)
+                print("Backed up to \(backupUrl.absoluteString)")
+            } catch (let error) {
+                fatalError("Failed to back up app state to \(backupUrl.absoluteString). Exiting to avoid overwriting the state. Error: \(error)")
+            }
+        } else {
+            fatalError("Failed to load URL for backup. Exiting to avoid overwriting the state.")
+        }
     }
     
     // MARK: - Boilerplate to allow for the object to be both observable and JSON codable

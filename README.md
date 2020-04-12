@@ -31,4 +31,3 @@ Just stuff for debugging on the device.
 
 * Graceful schema migration
 * Cloud storage
-

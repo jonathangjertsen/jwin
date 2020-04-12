@@ -57,7 +57,7 @@ class JList: Codable, Identifiable, ObservableObject {
         case name
         case items
     }
-
+        
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
