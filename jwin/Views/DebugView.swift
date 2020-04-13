@@ -152,7 +152,7 @@ struct DebugView: View {
     func requestPermissions() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             (granted, error) in
-            inMainThread {
+            DispatchQueue.main.async {
                 self.appState.permissions(granted: granted)
             }
         }

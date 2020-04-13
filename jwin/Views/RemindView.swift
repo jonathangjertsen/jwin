@@ -140,18 +140,17 @@ struct RemindView: View {
                 
             /// Get the pending notificatinos on load
             .onAppear {
-                self.checkPendingNotifications()
+                self.updatePendingNotificationsInView()
             }
         }
     }
     
     /// Check pending ontifications
-    func checkPendingNotifications(code: (() -> ())? = nil) {
+    func updatePendingNotificationsInView() {
         UNUserNotificationCenter.current().getPendingNotificationRequests {
             requests in
-            self.pendingNotifications = requests
-            if let code = code {
-                inMainThread(code)
+            DispatchQueue.main.async {
+                self.pendingNotifications = requests
             }
         }
     }
@@ -163,54 +162,53 @@ struct RemindView: View {
             return
         }
         self.reminders.add(submittedReminder)
-        self.checkPendingNotifications()
+        self.updatePendingNotificationsInView()
     }
     
     /// Clears a  (could in principle clear multiple) reminder and associated notification(s)
     /// - Parameter indices: indices to clear
     func clearSingle(indices: IndexSet) {
-        self.checkPendingNotifications {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(
-                withIdentifiers: Array(indices.compactMap {
-                    if let request = self.reminders.reminders[$0].associatedNotification(
-                        given: self.pendingNotifications
-                    ) {
-                        return request.identifier
-                    } else {
-                        return nil
-                    }
-                })
-            )
+        UNUserNotificationCenter.current().removePendingNotificationRequests(
+            withIdentifiers: Array(indices.compactMap {
+                if let request = self.reminders.reminders[$0].associatedNotification(
+                    given: self.pendingNotifications
+                ) {
+                    return request.identifier
+                } else {
+                    return nil
+                }
+            })
+        )
 
-            self.reminders.remove(at: indices)
-        }
+        self.reminders.remove(at: indices)
+        self.updatePendingNotificationsInView()
     }
     
     /// Clear every reminder and all associated notifications
     func clearAll() {
-        self.checkPendingNotifications {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(
-                withIdentifiers: Array(Set(self.pendingNotifications.map {
-                    $0.identifier
-                }).union(Set(self.reminders.reminders.map {
-                    $0.id.uuidString
-                })))
-            )
-            self.reminders.removeAll()
-            self.checkPendingNotifications()
-        }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(
+            withIdentifiers: Array(Set(self.pendingNotifications.map {
+                $0.identifier
+            }).union(Set(self.reminders.reminders.map {
+                $0.id.uuidString
+            })))
+        )
+
+        self.reminders.removeAll()
+        self.updatePendingNotificationsInView()
     }
     
     /// Clear old and out of sync reminders
     func clearOldAndOutOfSync() {
-        self.checkPendingNotifications {
-            let indexesToRemove = self.reminders.reminders.enumerated().filter {
-                index, reminder in
-                reminder.isOld() || reminder.isOutOfSync(given: self.pendingNotifications)
-            }.map { index, reminder in index }
-            
-            self.reminders.remove(at: IndexSet(indexesToRemove))
+        let enumeratedReminders = self.reminders.reminders.enumerated()
+        let enumeratedOldAndOutOfSyncReminders = enumeratedReminders.filter {
+            index, reminder in
+            reminder.isOld() || reminder.isOutOfSync(given: self.pendingNotifications)
         }
+        let indexesForOldAndOutOfSyncReminders = enumeratedOldAndOutOfSyncReminders.map{ index, reminder in index }
+        let indexSetToRemove = IndexSet(indexesForOldAndOutOfSyncReminders)
+        self.reminders.remove(at: indexSetToRemove)
+        self.updatePendingNotificationsInView()
     }
 }
 

@@ -21,8 +21,3 @@ class DatePoke: ObservableObject {
     }
 }
 
-func inMainThread(_ code: @escaping () -> ()) {
-    DispatchQueue.main.async {
-        code()
-    }
-}

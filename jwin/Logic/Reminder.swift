@@ -27,7 +27,10 @@ class Reminders: Codable, ObservableObject {
     /// - Parameters:
     ///     - at: The offsets to remove (provided by e.g. `.onDelete`)
     func remove(at offsets: IndexSet) {
-        self.reminders.remove(atOffsets: offsets)
+        offsets.forEach {
+            offset in
+            self.reminders.remove(at: offset)
+        }
     }
     
     /// Removes all reminders
