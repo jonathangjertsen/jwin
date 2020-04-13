@@ -47,3 +47,7 @@ Prerequisites: XCode, cocoapods
     * Fill in the form and place the `GoogleService-info.plist` into the top-level directory.
 * Open the workspace in XCode (`open jwin.xcworkspace`)
 * Launch
+
+## CLI
+
+Currently nonfunctional Python CLI interface to the same data
