@@ -61,9 +61,12 @@ class JList: Codable, Identifiable, ObservableObject {
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
+        /// ID and name must be valid to make sense
         self.id = try values.decode(UUID.self, forKey: .id)
         self.name = try values.decode(String.self, forKey: .name)
-        self.items = try values.decode([JListItem].self, forKey: .items)
+
+        /// Graceful handling of invalid elements: discard them
+        self.items = try values.decode([MaybeDecodable<JListItem>].self, forKey: .items).compactMap { $0.value }
     }
     
     func encode(to encoder: Encoder) throws {

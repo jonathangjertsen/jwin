@@ -29,5 +29,4 @@ Just stuff for debugging on the device.
 
 ## To-do
 
-* Graceful schema migration
 * Cloud storage
