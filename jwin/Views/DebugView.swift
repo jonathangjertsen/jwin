@@ -11,10 +11,13 @@ struct DebugView: View {
     @State private var pendingNotifications: [UNNotificationRequest] = []
     
     /// Set to true if an alert should show
-    @State private var showingSaveAlert = false
+    @State private var showingDebugAlert = false
     
     /// Text to show in the save alert, if any
-    @State private var saveAlertText: String = ""
+    @State private var debugAlertText: String = ""
+    
+    /// Toggle whether the user is logged in
+    @State private var loggedIn: Bool = false
     
     var body: some View {
         Form {
@@ -33,6 +36,26 @@ struct DebugView: View {
                 Text("\(self.appState.config.permissionsGranted ? "Yes" : "No")")
             }
             
+            /// Shows cloud persistence
+            if self.appState.cloudPersistence != nil {
+                Section(header: Text("Cloud persistence")) {
+                    return ForEach(self.appState.cloudPersistence!.debugItems(), id: \.key) {
+                        debugItem in
+                        HStack {
+                            Text(debugItem.key)
+                            Spacer()
+                            Text(debugItem.value).font(.footnote)
+                        }
+                    }
+                }
+                
+                FirebaseLoginView(
+                    loginData: self.appState.cloudPersistence!.loginData,
+                    onLogin: self.cloudLogin,
+                    onRegister: self.cloudRegister
+                )
+            }
+           
             /// Shows a list of all pending notifications and allows for them to be deleted
             if !self.pendingNotifications.isEmpty {
                 Section(header: Text("Pending notifications")) {
@@ -85,14 +108,27 @@ struct DebugView: View {
                 Button(action: self.storeAppState) {
                     Text("Save state")
                 }
+                
+
+                if self.appState.cloudPersistence != nil {
+                    /// Button for storing the app state to the cloud
+                    Button(action: self.storeAppStateToCloud) {
+                        Text("Save state to cloud")
+                    }.disabled(!self.appState.cloudPersistence!.loggedIn)
+                    
+                    /// Button for storing the app state to the cloud
+                    Button(action: self.loadAppStateFromCloud) {
+                        Text("Load state from cloud")
+                    }.disabled(!self.appState.cloudPersistence!.loggedIn)
+                }
             }
         }
 
         /// Alert showing the result of saving
-        .alert(isPresented: $showingSaveAlert) {
+        .alert(isPresented: $showingDebugAlert) {
             Alert(
-                title: Text("Result of save"),
-                message: Text(self.saveAlertText),
+                title: Text("Debug event"),
+                message: Text(self.debugAlertText),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -111,20 +147,109 @@ struct DebugView: View {
         self.appState.saveDefault(onSuccess: {
             url in
             /// Show text indicating success (only when saving explicitly)
-            self.saveAlertText = "Successfully wrote to \(url)"
+            self.debugAlertText = "Successfully wrote to \(url)"
             self.lastStateSave.poke()
         }, onError: {
             url in
             /// Show an appropriate text depending on whether we got the right URL
             if let url = url {
-                self.saveAlertText = "Failed writing to \(url)"
+                self.debugAlertText = "Failed writing to \(url)"
             } else {
-                self.saveAlertText = "Failed getting an URL"
+                self.debugAlertText = "Failed getting an URL"
             }
         })
         
         /// Indicate that we would like to show the alert now
-        self.showingSaveAlert = true
+        self.showingDebugAlert = true
+    }
+    
+    /// Log in to the cloud provider
+    func cloudLogin(loginData: LoginData) {
+        guard let cloudPersistence = self.appState.cloudPersistence else {
+            self.showAlert(text: "Can not log in: cloud persistence has not been initialized")
+            return
+        }
+        
+        cloudPersistence.logIn(with: loginData) {
+            err in
+            if err == nil {
+                self.showAlert(text: "Successfully logged in")
+            } else {
+                self.showAlert(text: "Error during login")
+            }
+        }
+    }
+    
+    /// Register at the cloud provider
+    func cloudRegister(loginData: LoginData) {
+        guard let cloudPersistence = self.appState.cloudPersistence else {
+            self.showAlert(text: "Can not register: cloud persistence has not been initialized")
+            return
+        }
+        
+        cloudPersistence.register(with: loginData) {
+            err in
+            if err == nil {
+                self.showAlert(text: "Successfully registered")
+            } else {
+                self.showAlert(text: "Error during registration")
+            }
+        }
+    }
+    
+    /// Stores the app state to cloud immediately and triggers an alert with info on whether it succeeded
+    func storeAppStateToCloud() {
+        guard let cloudPersistence = self.appState.cloudPersistence else {
+            self.showAlert(text: "Can not store state: persistence has not been initialized")
+            return
+        }
+        
+        guard let blob = try? self.appState.dumps() else {
+            self.showAlert(text: "Failed to dump app state")
+            return
+        }
+        
+        do {
+            try cloudPersistence.storeBlob(blob, identifier: "appStateDebug") {
+                self.showAlert(text: "Data was stored successfully")
+            }
+        } catch {
+            self.showAlert(text: "Error when storing blob: \(error)")
+        }
+    }
+    
+    /// Loads the app state from the cloud and triggers an alert with into on what happened
+    func loadAppStateFromCloud() {
+        guard let cloudPersistence = self.appState.cloudPersistence else {
+            self.showAlert(text: "Can not load state: persistence has not been initialized")
+            return
+        }
+        
+        do {
+            try cloudPersistence.loadBlob(identifier: "appStateDebug") {
+                data in
+                guard let data = data else {
+                    self.showAlert(text: "loadBlob returned nil data")
+                    return
+                }
+                
+                guard let newState = try? AppState.loads(from: data) else {
+                    self.showAlert(text: "Failed to load a valid AppState from blob")
+                    return
+                }
+                
+                self.appState.replaceAllData(with: newState)
+                self.showAlert(text: "Downloaded new state from cloud")
+            }
+        } catch {
+            self.showAlert(text: String(describing: error))
+        }
+    }
+    
+    /// Shows an alert.
+    func showAlert(text: String) {
+        self.debugAlertText = text
+        self.showingDebugAlert = true
     }
     
     /// Sends a demo notification after 2 s
@@ -168,9 +293,12 @@ struct DebugView: View {
 }
 
 struct DebugView_Previews: PreviewProvider {
+    static let appState = AppState.loadDemo()
+
     static var previews: some View {
-        DebugView(
-            appState: AppState.loadDemo(),
+        appState.cloudPersistence = CloudPersistenceMock()
+        return DebugView(
+            appState: appState,
             appStateUrl: AppState.demoUrl(),
             lastStateSave: DatePoke()
         )

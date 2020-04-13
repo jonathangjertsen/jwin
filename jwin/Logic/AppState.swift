@@ -17,26 +17,40 @@ class AppState: Codable, ObservableObject {
     /// Assorted configuration bits
     @Published var config: AppStateConfig
     
+    /// Handle for cloud persistence layer
+    @Published var cloudPersistence: CloudPersistable? = nil
+    
     /// Loads the app state from an URL
     /// - Parameter url: The url from which to load the app state
     /// - Throws: any exceptions from loading the URL or decoding the data
     /// - Returns: an AppState representation of the data
     static func load(from url: URL) throws -> Self {
+        return try self.loads(from: Data(contentsOf: url))
+    }
+    
+    /// Loads the app state from some Data
+    /// - Parameter from: The data to load from
+    /// - Throws: any exceptions from decoding the data
+    /// - Returns: an AppState representation of the data
+    static func loads(from data: Data) throws -> Self {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(.reminderFormat)
-        return try decoder.decode(
-            Self.self,
-            from: Data(contentsOf: url)
-        )
+        return try decoder.decode(Self.self, from: data)
+    }
+
+    /// Returns a JSON representation of the state
+    /// - Throws: any exceptions from encoding the data
+    func dumps() throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(.reminderFormat)
+        return try encoder.encode(self)
     }
     
     /// Saves the app state to an URL
     /// - Parameter url: The url to which the app state should be saved
     /// - Throws: any exceptions from encoding the data or writing to the URL
     func save(to url: URL) throws {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .formatted(.reminderFormat)
-        try encoder.encode(self).write(to: url)
+        return try self.dumps().write(to: url)
     }
     
     /// Saves the app state to the default URL.
@@ -83,6 +97,13 @@ class AppState: Codable, ObservableObject {
         }
         timer.tolerance = seconds * toleranceFraction.clamp(between: 0.0, and: 1.0)
         return timer
+    }
+    
+    /// Replaces all data in this instance with the data in another instance
+    func replaceAllData(with other: AppState) {
+        self.lists = other.lists
+        self.reminders = other.reminders
+        self.config = other.config
     }
     
     /// Adds a new empty list.
@@ -169,14 +190,16 @@ class AppState: Codable, ObservableObject {
             if let appState = try? AppState.load(from: url) {
                 return (appState, url)
             } else {
-                self.makeBackup(from: url)
+                self.makeLocalBackup(from: url)
             }
         }
         
         return (loadDemo(), AppState.demoUrl())
     }
     
-    static func makeBackup(from url: URL) {
+    /// Make a backup of a (possibly corrupted) JSON file
+    /// - Parameter url: URL for the JSON file
+    static func makeLocalBackup(from url: URL) {
         if let backupUrl = AppState.backupUrl(
             timestamp: Int(Date().timeIntervalSince1970)
             ) {

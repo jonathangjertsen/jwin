@@ -5,12 +5,27 @@ import SwiftUI
 private let saveIntervalS = 10.0
 private let saveToleranceFraction = 0.2
 
-/// Sets up everything the app needs and creates a view
+/// Parameters for cloud persistence
+private let collectionName = "jwin_0"
+
+/// Stuff to do at app boot (called from AppDelegate)
+func setupApp() {
+    /// Initialize firebase
+    FirestorePersistence.configure()
+}
+
+/// Sets up everything the app needs and creates a view (called from SceneDelegate)
 /// - Returns: The top-level SwiftUI View for the app
 func startApp() -> AppView {
     /// Load app state
     let (appState, url) = AppState.loadFromDefaultOrDemo()
 
+    /// Init cloud persistence layer and attach to app state
+    appState.cloudPersistence = FirestorePersistence(
+        collectionName: collectionName,
+        loginData: LoginData.fromKeychainOrEmpty(under: "firebase")
+    )
+    
     /// Initialize the view
     let view = AppView(
         appState: appState,
@@ -33,7 +48,12 @@ func startApp() -> AppView {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool { true }
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        setupApp()
+        
+        return true
+    }
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration { UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role) }
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
 }

@@ -4,7 +4,7 @@ An app that has just the things I need.
 
 Provides a tabbed view of some "sub-apps" that are not really related, but having them in the same app is nice.
 
-App data is stored as a single JSON document (which it should eventually be possible to upload/download to some cloud provider for integration with other front-ends)
+App data is stored as a single JSON document and can be backed up to Firebase through the debug view.
 
 ## Sub-apps
 
@@ -25,9 +25,25 @@ Reminder functionality
 
 ### Debug
 
-Just stuff for debugging on the device.
+* Stuff for debugging on the device
+* Login and cloud backup of the app state
 
 ## To-do
 
-* Cloud storage
-* Set up unit tests and UI tests
+* Upload newest version to cloud in the background at a reasonable interval
+
+## Setup
+
+Prerequisites: XCode, cocoapods
+
+* Clone the repo
+* Go to the created directory and run `pod install`s
+* Firebase setup ([nice Youtube guide here](https://www.youtube.com/watch?v=P1cNScXGlVI))
+    * Create a new Firebase project
+    * Develop --> Database --> Enable Firestore
+    * Develop --> Database --> Rules --> Set some rules that at least require a logged-in user, optionally with a specific email etc
+    * Develop --> Authentication --> Enable Email/Password
+    * Settings --> Project settings --> Add iOS app
+    * Fill in the form and place the `GoogleService-info.plist` into the top-level directory.
+* Open the workspace in XCode (`open jwin.xcworkspace`)
+* Launch

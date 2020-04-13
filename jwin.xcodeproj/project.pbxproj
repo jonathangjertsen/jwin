@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58D2C0F66BBED0A2C57D505D /* Pods_jwin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB059EF587A86D7D9A196F9 /* Pods_jwin.framework */; };
+		6D6CE1922444D7FD0010A3D0 /* FirebaseLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CE1912444D7FD0010A3D0 /* FirebaseLoginView.swift */; };
+		6D72AE1B244498A000F66602 /* CloudPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D72AE1A244498A000F66602 /* CloudPersistence.swift */; };
 		6D901FEA24428EBE00E52724 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FE924428EBE00E52724 /* Helpers.swift */; };
 		6D901FEC24433B8300E52724 /* ListOfItemsConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FEB24433B8300E52724 /* ListOfItemsConfigView.swift */; };
 		6D901FEE244341E800E52724 /* RemindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FED244341E800E52724 /* RemindView.swift */; };
@@ -14,6 +17,7 @@
 		6D901FF22443A9DA00E52724 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FF12443A9DA00E52724 /* Extensions.swift */; };
 		6D901FF62443C84700E52724 /* CenteredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FF52443C84700E52724 /* CenteredButton.swift */; };
 		6D901FF82443F0D800E52724 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FF72443F0D800E52724 /* Main.swift */; };
+		6D901FFA2444904C00E52724 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D901FF92444904C00E52724 /* GoogleService-Info.plist */; };
 		6DFDD1312440AFCD00E2B635 /* ListOfListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */; };
 		6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1322440AFCF00E2B635 /* Assets.xcassets */; };
 		6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */; };
@@ -26,6 +30,7 @@
 		6DFDD15B2441FE5900E2B635 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD15A2441FE5900E2B635 /* AppStateTests.swift */; };
 		6DFDD160244222A400E2B635 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD15F244222A400E2B635 /* AppView.swift */; };
 		6DFDD162244223FD00E2B635 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD161244223FD00E2B635 /* DebugView.swift */; };
+		C64686C35AB8ED65EB634949 /* Pods_jwinTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A57106C0A4396ACD949A96 /* Pods_jwinTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380440966A8403BD470114BA /* Pods-jwin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwin.release.xcconfig"; path = "Target Support Files/Pods-jwin/Pods-jwin.release.xcconfig"; sourceTree = "<group>"; };
+		46128541594EA1E6D02CCC8F /* Pods-jwinTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwinTests.debug.xcconfig"; path = "Target Support Files/Pods-jwinTests/Pods-jwinTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6D6CE1912444D7FD0010A3D0 /* FirebaseLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLoginView.swift; sourceTree = "<group>"; };
+		6D72AE1A244498A000F66602 /* CloudPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudPersistence.swift; sourceTree = "<group>"; };
 		6D901FE924428EBE00E52724 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		6D901FEB24433B8300E52724 /* ListOfItemsConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfItemsConfigView.swift; sourceTree = "<group>"; };
 		6D901FED244341E800E52724 /* RemindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindView.swift; sourceTree = "<group>"; };
@@ -46,6 +55,7 @@
 		6D901FF12443A9DA00E52724 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6D901FF52443C84700E52724 /* CenteredButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredButton.swift; sourceTree = "<group>"; };
 		6D901FF72443F0D800E52724 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		6D901FF92444904C00E52724 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6DFDD1292440AFCD00E2B635 /* jwin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jwin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfListsView.swift; sourceTree = "<group>"; };
 		6DFDD1322440AFCF00E2B635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +73,10 @@
 		6DFDD15C244204FB00E2B635 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6DFDD15F244222A400E2B635 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6DFDD161244223FD00E2B635 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		7BB059EF587A86D7D9A196F9 /* Pods_jwin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jwin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C4BA7C141694CC07824AD20 /* Pods-jwinTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwinTests.release.xcconfig"; path = "Target Support Files/Pods-jwinTests/Pods-jwinTests.release.xcconfig"; sourceTree = "<group>"; };
+		B36C4B8F7B8E9C26684EB56E /* Pods-jwin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jwin.debug.xcconfig"; path = "Target Support Files/Pods-jwin/Pods-jwin.debug.xcconfig"; sourceTree = "<group>"; };
+		E7A57106C0A4396ACD949A96 /* Pods_jwinTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jwinTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58D2C0F66BBED0A2C57D505D /* Pods_jwin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C64686C35AB8ED65EB634949 /* Pods_jwinTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +106,8 @@
 				6DFDD12B2440AFCD00E2B635 /* jwin */,
 				6DFDD1512441FDB900E2B635 /* jwinTests */,
 				6DFDD12A2440AFCD00E2B635 /* Products */,
+				9D705E6832C779D4DBC9F370 /* Pods */,
+				C679A8449AB1C400B361E75D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +130,7 @@
 				6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */,
 				6DFDD13A2440AFCF00E2B635 /* Info.plist */,
 				6D901FF72443F0D800E52724 /* Main.swift */,
+				6D901FF92444904C00E52724 /* GoogleService-Info.plist */,
 			);
 			path = jwin;
 			sourceTree = "<group>";
@@ -133,6 +152,7 @@
 				6D901FE924428EBE00E52724 /* Helpers.swift */,
 				6D901FEF2443461600E52724 /* Reminder.swift */,
 				6D901FF12443A9DA00E52724 /* Extensions.swift */,
+				6D72AE1A244498A000F66602 /* CloudPersistence.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -149,8 +169,29 @@
 				6D901FED244341E800E52724 /* RemindView.swift */,
 				6D901FF52443C84700E52724 /* CenteredButton.swift */,
 				6DFDD161244223FD00E2B635 /* DebugView.swift */,
+				6D6CE1912444D7FD0010A3D0 /* FirebaseLoginView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		9D705E6832C779D4DBC9F370 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B36C4B8F7B8E9C26684EB56E /* Pods-jwin.debug.xcconfig */,
+				380440966A8403BD470114BA /* Pods-jwin.release.xcconfig */,
+				46128541594EA1E6D02CCC8F /* Pods-jwinTests.debug.xcconfig */,
+				8C4BA7C141694CC07824AD20 /* Pods-jwinTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C679A8449AB1C400B361E75D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BB059EF587A86D7D9A196F9 /* Pods_jwin.framework */,
+				E7A57106C0A4396ACD949A96 /* Pods_jwinTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,9 +201,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DFDD13D2440AFCF00E2B635 /* Build configuration list for PBXNativeTarget "jwin" */;
 			buildPhases = (
+				585C7AD84ECBB78C9044C57E /* [CP] Check Pods Manifest.lock */,
 				6DFDD1252440AFCD00E2B635 /* Sources */,
 				6DFDD1262440AFCD00E2B635 /* Frameworks */,
 				6DFDD1272440AFCD00E2B635 /* Resources */,
+				D89F0448231697314755B2BB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -177,6 +220,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DFDD1572441FDB900E2B635 /* Build configuration list for PBXNativeTarget "jwinTests" */;
 			buildPhases = (
+				CD17559CB3BE6E2D1FA2980C /* [CP] Check Pods Manifest.lock */,
 				6DFDD14C2441FDB900E2B635 /* Sources */,
 				6DFDD14D2441FDB900E2B635 /* Frameworks */,
 				6DFDD14E2441FDB900E2B635 /* Resources */,
@@ -236,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */,
+				6D901FFA2444904C00E52724 /* GoogleService-Info.plist in Resources */,
 				6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */,
 				6DFDD14B2441FAAF00E2B635 /* demo_app_state.json in Resources */,
 			);
@@ -250,11 +295,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		585C7AD84ECBB78C9044C57E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-jwin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD17559CB3BE6E2D1FA2980C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-jwinTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D89F0448231697314755B2BB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-jwin/Pods-jwin-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-jwin/Pods-jwin-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-jwin/Pods-jwin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6DFDD1252440AFCD00E2B635 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6CE1922444D7FD0010A3D0 /* FirebaseLoginView.swift in Sources */,
 				6D901FEA24428EBE00E52724 /* Helpers.swift in Sources */,
 				6D901FF02443461600E52724 /* Reminder.swift in Sources */,
 				6DFDD160244222A400E2B635 /* AppView.swift in Sources */,
@@ -268,6 +378,7 @@
 				6D901FF22443A9DA00E52724 /* Extensions.swift in Sources */,
 				6DFDD162244223FD00E2B635 /* DebugView.swift in Sources */,
 				6DFDD1412440B19600E2B635 /* ItemRow.swift in Sources */,
+				6D72AE1B244498A000F66602 /* CloudPersistence.swift in Sources */,
 				6DFDD1312440AFCD00E2B635 /* ListOfListsView.swift in Sources */,
 				6DFDD1432440B5FA00E2B635 /* ListOfItems.swift in Sources */,
 			);
@@ -419,6 +530,7 @@
 		};
 		6DFDD13E2440AFCF00E2B635 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B36C4B8F7B8E9C26684EB56E /* Pods-jwin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -440,6 +552,7 @@
 		};
 		6DFDD13F2440AFCF00E2B635 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 380440966A8403BD470114BA /* Pods-jwin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -461,6 +574,7 @@
 		};
 		6DFDD1582441FDB900E2B635 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46128541594EA1E6D02CCC8F /* Pods-jwinTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -484,6 +598,7 @@
 		};
 		6DFDD1592441FDB900E2B635 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C4BA7C141694CC07824AD20 /* Pods-jwinTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
