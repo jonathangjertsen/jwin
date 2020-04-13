@@ -40,7 +40,7 @@ if __name__ == "__main__":
         "projectId": args.project_id
     })
     db = firestore.client()
-    
+
     # Transform the data and update if changed
     data_ref = db.collection(args.collection).document(args.document)
     data_in = data_ref.get("json")
