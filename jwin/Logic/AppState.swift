@@ -204,13 +204,13 @@ class AppState: Codable, ObservableObject {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         /// Graceful handling of invalid config: use default config with no permissions granted
-        self.config = try values.decode(MaybeDecodable<AppStateConfig>.self, forKey: .config).value ?? AppStateConfig.init(permissionsGranted: false)
+        self.config = (try? values.decode(MaybeDecodable<AppStateConfig>.self, forKey: .config).value) ?? AppStateConfig.init(permissionsGranted: false)
 
         /// Graceful handling of invalid reminders: init to empty set of reminders
-        self.reminders = try values.decode(MaybeDecodable<Reminders>.self, forKey: .reminders).value ?? Reminders.empty()
+        self.reminders = (try? values.decode(MaybeDecodable<Reminders>.self, forKey: .reminders).value) ?? Reminders.empty()
         
         /// Graceful handling of invalid lists: skip them
-        self.lists = try values.decode([MaybeDecodable<JList>].self, forKey: .lists).compactMap { $0.value }
+        self.lists = (try? values.decode([MaybeDecodable<JList>].self, forKey: .lists).compactMap { $0.value }) ?? []
     }
     
     func encode(to encoder: Encoder) throws {

@@ -57,7 +57,7 @@ class Reminders: Codable, ObservableObject {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         /// Graceful handling of invalid reminders: skip them
-        self.reminders = try values.decode([MaybeDecodable<Reminder>].self, forKey: .reminders).compactMap { $0.value }
+        self.reminders = (try? values.decode([MaybeDecodable<Reminder>].self, forKey: .reminders).compactMap { $0.value }) ?? []
     }
     
     func encode(to encoder: Encoder) throws {

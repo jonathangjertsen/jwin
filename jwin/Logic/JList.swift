@@ -66,7 +66,7 @@ class JList: Codable, Identifiable, ObservableObject {
         self.name = try values.decode(String.self, forKey: .name)
 
         /// Graceful handling of invalid elements: discard them
-        self.items = try values.decode([MaybeDecodable<JListItem>].self, forKey: .items).compactMap { $0.value }
+        self.items = (try? values.decode([MaybeDecodable<JListItem>].self, forKey: .items).compactMap { $0.value }) ?? []
     }
     
     func encode(to encoder: Encoder) throws {

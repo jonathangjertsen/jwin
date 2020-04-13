@@ -9,7 +9,7 @@ enum DebugError: Error {
 struct MaybeDecodable<T: Decodable>: Decodable {
     let value: T?
 
-    init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) {
         guard let container = try? decoder.singleValueContainer() else {
             self.value = nil
             return
