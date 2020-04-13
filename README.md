@@ -30,3 +30,4 @@ Just stuff for debugging on the device.
 ## To-do
 
 * Cloud storage
+* Set up unit tests and UI tests

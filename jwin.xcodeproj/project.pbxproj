@@ -16,7 +16,6 @@
 		6D901FF82443F0D800E52724 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D901FF72443F0D800E52724 /* Main.swift */; };
 		6DFDD1312440AFCD00E2B635 /* ListOfListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */; };
 		6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1322440AFCF00E2B635 /* Assets.xcassets */; };
-		6DFDD1362440AFCF00E2B635 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */; };
 		6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */; };
 		6DFDD1412440B19600E2B635 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1402440B19600E2B635 /* ItemRow.swift */; };
 		6DFDD1432440B5FA00E2B635 /* ListOfItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDD1422440B5FA00E2B635 /* ListOfItems.swift */; };
@@ -50,7 +49,6 @@
 		6DFDD1292440AFCD00E2B635 /* jwin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jwin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DFDD1302440AFCD00E2B635 /* ListOfListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfListsView.swift; sourceTree = "<group>"; };
 		6DFDD1322440AFCF00E2B635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6DFDD1382440AFCF00E2B635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DFDD13A2440AFCF00E2B635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DFDD1402440B19600E2B635 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
@@ -113,18 +111,9 @@
 				6DFDD1322440AFCF00E2B635 /* Assets.xcassets */,
 				6DFDD1372440AFCF00E2B635 /* LaunchScreen.storyboard */,
 				6DFDD13A2440AFCF00E2B635 /* Info.plist */,
-				6DFDD1342440AFCF00E2B635 /* Preview Content */,
 				6D901FF72443F0D800E52724 /* Main.swift */,
 			);
 			path = jwin;
-			sourceTree = "<group>";
-		};
-		6DFDD1342440AFCF00E2B635 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				6DFDD1352440AFCF00E2B635 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		6DFDD1512441FDB900E2B635 /* jwinTests */ = {
@@ -247,7 +236,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DFDD1392440AFCF00E2B635 /* LaunchScreen.storyboard in Resources */,
-				6DFDD1362440AFCF00E2B635 /* Preview Assets.xcassets in Resources */,
 				6DFDD1332440AFCF00E2B635 /* Assets.xcassets in Resources */,
 				6DFDD14B2441FAAF00E2B635 /* demo_app_state.json in Resources */,
 			);
@@ -434,7 +422,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"jwin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
@@ -455,7 +443,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"jwin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8WUVFVZ3DA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = jwin/Info.plist;
