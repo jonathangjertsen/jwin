@@ -167,7 +167,6 @@ class AppState: Codable, ObservableObject {
     static func loadFromDefaultOrDemo() -> (AppState, URL) {
         if let url = AppState.defaultUrl() {
             if let appState = try? AppState.load(from: url) {
-                print("Loaded from \(url)")
                 return (appState, url)
             } else {
                 self.makeBackup(from: url)
